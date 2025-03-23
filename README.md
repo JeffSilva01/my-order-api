@@ -1,14 +1,13 @@
-# Título do Projeto
+# My Order
 
-Uma breve descrição sobre o que esse projeto faz e para quem ele é
+API de pedidos para lanchonetes
 
 ## Etiquetas
 
-Adicione etiquetas de algum lugar, como: [shields.io](https://shields.io/)
-
-[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-[![AGPL License](https://img.shields.io/badge/license-AGPL-blue.svg)](http://www.gnu.org/licenses/agpl-3.0)
+![Go Version](https://img.shields.io/github/go-mod/go-version/jeffsilva01/my-order-api)
+![Docker](https://img.shields.io/badge/Docker-ready-blue?logo=docker)
+![License](https://img.shields.io/github/license/jeffsilva01/jeffsilva01)
+![Latest Release](https://img.shields.io/github/v/release/jeffsilva01/jeffsilva01)
 
 ## Demonstração
 
@@ -24,7 +23,7 @@ Insira um gif ou um link de alguma demonstração
 
 | Parâmetro | Tipo     | Descrição                           |
 | :-------- | :------- | :---------------------------------- |
-| `api_key` | `string` | **Obrigatório**. A chave da sua API |
+|           | `string` | **Obrigatório**. A chave da sua API |
 
 #### Retorna um item
 
@@ -42,4 +41,5 @@ Recebe dois números e retorna a sua soma.
 
 ## Autores
 
-- [@octokatherine](https://www.github.com/octokatherine)
+- [@JeffSilva01](https://www.github.com/jeffsilva01)
+- [@DevSamSilva](https://www.github.com/DevSamSilva)
