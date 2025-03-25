@@ -1,16 +1,33 @@
 package main
 
 import (
-	"fmt"
+	"database/sql"
+	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	_ "github.com/lib/pq"
 )
 
 func main() {
-	http.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "hello, world")
+	// String de conexão
+	connStr := "host=localhost port=5432 user=postgres password=senha123 dbname=meudb sslmode=disable"
+
+	// Abre a conexão
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatal("Erro ao conectar ao banco de dados:", err)
+	}
+
+	defer db.Close() // Garante que a conexão será fechada
+
+	router := gin.Default()
+
+	router.GET("/", func(c *gin.Context) {
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Hello World!",
+		})
 	})
 
-	if err := http.ListenAndServe(":8080", nil); err != nil {
-		panic(err)
-	}
+	router.Run()
 }
