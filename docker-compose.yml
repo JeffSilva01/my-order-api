@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: my_order_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Opcional: se quiser inicializar o banco com scripts SQL
+      # - ./init-scripts:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+
+volumes:
+  postgres_data:
+    name: postgres_data
+
+networks:
+  app_network:
+    driver: bridge
