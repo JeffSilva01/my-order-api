@@ -2,10 +2,13 @@ package database
 
 import (
 	"log"
+	"os"
 
 	domain "github.com/JeffSilva01/my-order-api/internal/domain/product"
-	"github.com/jinzhu/gorm"
-	_ "github.com/lib/pq"
+	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
+	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 type Database struct {
@@ -42,23 +45,37 @@ func NewDbTest() *gorm.DB {
 func (d *Database) Connect() (*gorm.DB, error) {
 	var err error
 
+	logConfig := logger.Config{
+		LogLevel: logger.Silent,
+		Colorful: false,
+	}
+
+	if d.Debug {
+		logConfig.LogLevel = logger.Info
+		logConfig.Colorful = true
+	}
+
+	newLogger := logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags),
+		logConfig,
+	)
+
+	openConfig := &gorm.Config{
+		Logger: newLogger,
+	}
+
 	if d.Env != "test" {
-		d.Db, err = gorm.Open(d.DbType, d.Dsn)
+		d.Db, err = gorm.Open(postgres.Open(d.Dsn), openConfig)
 	} else {
-		d.Db, err = gorm.Open(d.DbTypeTest, d.DsnTest)
+		d.Db, err = gorm.Open(sqlite.Open(d.DsnTest), openConfig)
 	}
 
 	if err != nil {
 		return nil, err
 	}
 
-	if d.Debug {
-		d.Db.LogMode(true)
-	}
-
 	if d.AutoMigrateDb {
 		d.Db.AutoMigrate(&domain.Product{})
-		// d.Db.Model(domain.Job{}).AddForeignKey("video_id", "videos (id)", "CASCADE", "CASCADE")
 	}
 
 	return d.Db, nil

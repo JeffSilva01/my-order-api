@@ -41,12 +41,10 @@ func init() {
 
 func main() {
 	// Abre a conexão
-	dbConnection, err := db.Connect()
+	_, err := db.Connect()
 	if err != nil {
 		log.Fatalf("error connecting to DB")
 	}
-
-	defer dbConnection.Close()
 
 	router := gin.Default()
 
